@@ -12,9 +12,10 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from django.contrib.messages import constants as messages
 from pathlib import Path
-from decouple import config
 import os
 from django import conf
+from decouple import config
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,10 +25,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-w89bp1-0@v&%q7f&3hh^f*twlgg)s%0ai#5vh_r5qfzrw4!%_2'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', cast=bool)
 
 ALLOWED_HOSTS = ['194.195.118.42', '127.0.0.1',
                  'djangofoodonline.com', 'www.djangofoodonline.com']
@@ -96,10 +97,10 @@ WSGI_APPLICATION = 'foodOnline_main.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'fooOnline_db2',
-        'USER': 'postgres',
-        'PASSWORD': 'aquil@123',
-        'HOST': 'localhost',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
     }
 }
 
@@ -163,14 +164,14 @@ MESSAGE_TAGS = {
 }
 
 # Email configuration
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'djangofood16@gmail.com'
-EMAIL_HOST_PASSWORD = 'bwfzqxjfnnodvyll'
-EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'foodOnline Marketplace <django.foodonline@gmail.com>'
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_PORT = config('EMAIL_PORT')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
 
-GOOGLE_API_KEY = 'AIzaSyA1QcgulRBC5ojUIZTTYWvL1-8TEQ_3sOk'
+GOOGLE_API_KEY = config('GOOGLE_API_KEY')
 
 if DEBUG == True:
     os.environ['PATH'] = os.path.join(
